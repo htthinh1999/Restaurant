@@ -14,7 +14,7 @@ namespace RestaurantManagement.Data
                    .SetBasePath(Directory.GetCurrentDirectory())
                    .AddJsonFile("appsettings.json")
                    .Build();
-            string connectionString = configuration.GetConnectionString(SystemConstants.LocalConnection);
+            string connectionString = configuration.GetConnectionString(SystemConstants.OnlineConnection);
 
             var optionsBuilder = new DbContextOptionsBuilder<RestaurantDbContext>();
             optionsBuilder.UseSqlServer(connectionString);
