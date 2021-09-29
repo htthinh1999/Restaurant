@@ -24,8 +24,6 @@
     <None Remove="Constants\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\Entities\" />
-    <Folder Include="Data\Configurations\" />
     <Folder Include="Constants\" />
   </ItemGroup>
 </Project>
