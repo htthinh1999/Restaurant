@@ -20,10 +20,11 @@ namespace RestaurantManagement.Data
 
             modelBuilder.ApplyConfiguration(new TableConfiguration());
             modelBuilder.ApplyConfiguration(new CustomerConfiguration());
-
+            modelBuilder.ApplyConfiguration(new FoodConfiguration());
         }
 
         public DbSet<Table> Table { get; set; }
         public DbSet<Customer> Customer { get; set; }
+        public DbSet<Food> Food { get; set; }
     }
 }
