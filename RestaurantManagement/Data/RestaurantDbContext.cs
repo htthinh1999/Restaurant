@@ -21,14 +21,16 @@ namespace RestaurantManagement.Data
             modelBuilder.ApplyConfiguration(new TableConfiguration());
             modelBuilder.ApplyConfiguration(new CustomerConfiguration());
             modelBuilder.ApplyConfiguration(new FoodConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderTableConfiguration());
+            modelBuilder.ApplyConfiguration(new BillConfiguration());
             modelBuilder.ApplyConfiguration(new BillDetailConfiguration());
-            modelBuilder.ApplyConfiguration(new Order_tableConfiguration());
         }
 
         public DbSet<Table> Table { get; set; }
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Food> Food { get; set; }
+        public DbSet<OrderTable> OderTable { get; set; }
+        public DbSet<Bill> Bill { get; set; }
         public DbSet<BillDetail> BillDetail { get; set; }
-        public DbSet<Order_table> Oder_table { get; set; }
     }
 }

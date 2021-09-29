@@ -148,6 +148,32 @@ namespace RestaurantManagement.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("RestaurantManagement.Data.Entities.Bill", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Total")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("BILL");
+                });
+
             modelBuilder.Entity("RestaurantManagement.Data.Entities.Customer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -231,7 +257,7 @@ namespace RestaurantManagement.Migrations
 
             modelBuilder.Entity("RestaurantManagement.Data.Entities.Food", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -259,35 +285,35 @@ namespace RestaurantManagement.Migrations
                     b.Property<int>("UnitPrice")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("FOOD");
                 });
 
-            modelBuilder.Entity("RestaurantManagement.Data.Entities.Order_table", b =>
+            modelBuilder.Entity("RestaurantManagement.Data.Entities.OrderTable", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<Guid>("CustomerID")
+                    b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("From")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TableID")
+                    b.Property<int>("TableId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("To")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("CustomerID");
+                    b.HasIndex("CustomerId");
 
-                    b.HasIndex("TableID");
+                    b.HasIndex("TableId");
 
                     b.ToTable("ODER_TABLE");
                 });
@@ -364,20 +390,27 @@ namespace RestaurantManagement.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RestaurantManagement.Data.Entities.Order_table", b =>
+            modelBuilder.Entity("RestaurantManagement.Data.Entities.Bill", b =>
                 {
                     b.HasOne("RestaurantManagement.Data.Entities.Customer", "Customer")
-                        .WithMany("Order_table")
-                        .HasForeignKey("CustomerID")
-                        .HasConstraintName("FK_CustomerID")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .WithMany("Bills")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RestaurantManagement.Data.Entities.OrderTable", b =>
+                {
+                    b.HasOne("RestaurantManagement.Data.Entities.Customer", "Customer")
+                        .WithMany("OrderTables")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("RestaurantManagement.Data.Entities.Table", "Table")
-                        .WithMany("Order_table")
-                        .HasForeignKey("TableID")
-                        .HasConstraintName("FK_TableID")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .WithMany("OrderTables")
+                        .HasForeignKey("TableId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

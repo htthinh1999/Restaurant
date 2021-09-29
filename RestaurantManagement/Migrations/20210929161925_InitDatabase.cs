@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RestaurantManagement.Migrations
 {
-    public partial class CreateCustomerAndTable : Migration
+    public partial class InitDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,6 +48,23 @@ namespace RestaurantManagement.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CUSTOMER", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FOOD",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    UnitPrice = table.Column<int>(nullable: false),
+                    Category = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true, defaultValue: "None."),
+                    ImageURL = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FOOD", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,6 +187,55 @@ namespace RestaurantManagement.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BILL",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CustomerId = table.Column<Guid>(nullable: false),
+                    Total = table.Column<int>(nullable: false),
+                    PaymentMethod = table.Column<string>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BILL", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BILL_CUSTOMER_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "CUSTOMER",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ODER_TABLE",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CustomerId = table.Column<Guid>(nullable: false),
+                    TableId = table.Column<int>(nullable: false),
+                    From = table.Column<DateTime>(nullable: false),
+                    To = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ODER_TABLE", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ODER_TABLE_CUSTOMER_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "CUSTOMER",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ODER_TABLE_TABLE_TableId",
+                        column: x => x.TableId,
+                        principalTable: "TABLE",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -198,6 +264,11 @@ namespace RestaurantManagement.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BILL_CustomerId",
+                table: "BILL",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "CUSTOMER",
                 column: "NormalizedEmail");
@@ -208,6 +279,16 @@ namespace RestaurantManagement.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ODER_TABLE_CustomerId",
+                table: "ODER_TABLE",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ODER_TABLE_TableId",
+                table: "ODER_TABLE",
+                column: "TableId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -228,13 +309,22 @@ namespace RestaurantManagement.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "TABLE");
+                name: "BILL");
+
+            migrationBuilder.DropTable(
+                name: "FOOD");
+
+            migrationBuilder.DropTable(
+                name: "ODER_TABLE");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "CUSTOMER");
+
+            migrationBuilder.DropTable(
+                name: "TABLE");
         }
     }
 }
