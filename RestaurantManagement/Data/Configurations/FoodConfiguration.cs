@@ -9,7 +9,7 @@ namespace RestaurantManagement.Data.Configurations
         public void Configure(EntityTypeBuilder<Food> builder)
         {
             builder.ToTable("FOOD");
-            builder.HasKey(f => f.ID);
+            builder.HasKey(f => f.Id);
             builder.Property(f => f.Name).HasMaxLength(200).IsUnicode().IsRequired();
             builder.Property(f => f.UnitPrice).IsRequired();
             builder.Property(f => f.Category).IsRequired();
