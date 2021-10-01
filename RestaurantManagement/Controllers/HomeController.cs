@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestaurantManagement.Models;
-using System;
-using System.Collections.Generic;
+using RestaurantManagement.Services;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RestaurantManagement.Controllers
@@ -12,14 +10,35 @@ namespace RestaurantManagement.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ICustomerService _customerService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,
+                              ICustomerService customerService)
         {
             _logger = logger;
+            _customerService = customerService;
         }
 
         public IActionResult Index()
         {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        {
+            var loginSucess = await _customerService.LoginAsync(loginViewModel.UserName, loginViewModel.Password);
+            
+            if (loginSucess)
+            {
+                return RedirectToAction("Index");
+            }
             return View();
         }
 
