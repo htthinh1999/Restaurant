@@ -14,5 +14,6 @@ namespace RestaurantManagement.Data.Entities
         public DateTime CreatedDate { get; set; }
 
         public Customer Customer { get; set; }
+        public List<BillDetail> BillDetail { get; set; }
     }
 }
