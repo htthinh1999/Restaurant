@@ -7,7 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using RestaurantManagement.Constants;
 using RestaurantManagement.Data;
+using RestaurantManagement.Data.Entities;
 using RestaurantManagement.Services;
 using System;
 using System.Collections.Generic;
@@ -18,6 +21,15 @@ namespace RestaurantManagement
 {
     public class Startup
     {
+        public static readonly ILoggerFactory SQLServerLoggerFactory =
+        LoggerFactory.Create(
+            builder =>
+            {
+                builder.AddConsole()
+                       .AddFilter(level => level == LogLevel.Information);
+            }
+        );
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,7 +43,18 @@ namespace RestaurantManagement
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            services.AddDbContext<RestaurantDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.OnlineConnection))
+                            .UseLoggerFactory(SQLServerLoggerFactory)
+                            .EnableSensitiveDataLogging());
+
+            // Add Identity
+            services.AddIdentity<Customer, IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<RestaurantDbContext>()
+                .AddDefaultTokenProviders();
+
             // Register Dependence Injection (DI)
+            services.AddTransient<SignInManager<Customer>, SignInManager<Customer>>();
             services.AddTransient<ICustomerService, CustomerService>();
         }
 

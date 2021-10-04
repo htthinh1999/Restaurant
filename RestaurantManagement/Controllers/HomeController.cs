@@ -27,19 +27,25 @@ namespace RestaurantManagement.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(loginViewModel);
+            }
+
             var loginSucess = await _customerService.LoginAsync(loginViewModel.UserName, loginViewModel.Password);
             
-            if (loginSucess)
+            if (!loginSucess)
             {
-                return RedirectToAction("Index");
+                return View(loginViewModel);
             }
-            return View();
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()
