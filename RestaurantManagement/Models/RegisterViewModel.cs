@@ -13,7 +13,11 @@ namespace RestaurantManagement.Models
         [Required()]
         public string Password { get; set; }
         [Required()]
+        public string RePassword { get; set; }
+        [Required()]
         public string FullName { get; set; }
+        [Required()]
+        public string PhoneNumber { get; set; }
         [Required()]
         public bool Gender { get; set; }
         [Required()]

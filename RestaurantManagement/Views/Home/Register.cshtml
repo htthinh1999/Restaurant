@@ -55,7 +55,7 @@
                                 </div>
                                 <input type="text"
                                        class="form-control"
-                                       placeholder="username"
+                                       placeholder="Username..."
                                        name="registerViewModel.UserName" />
                             </div>
                             <div class="input-group form-group">
@@ -66,36 +66,63 @@
                                 </div>
                                 <input type="password"
                                        class="form-control"
-                                       placeholder="password"
+                                       placeholder="Password..."
                                        name="registerViewModel.Password" />
                             </div>
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <i class="fas fa-user"></i>
+                                        <i class="fas fa-key"></i>
                                     </span>
                                 </div>
-                                <input type="text"
+                                <input type="password"
                                        class="form-control"
-                                       placeholder="FullName"
-                                       name="registerViewModel.FullName" />
+                                       placeholder="Confirm Password..."
+                                       name="registerViewModel.RePassword" />
                             </div>
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <i class="fas fa-user"></i>
+                                        <i class="fas fa-signature"></i>
                                     </span>
                                 </div>
-                                <input type="datetime-local" id="birthdaytime" name="registerViewModel.Birthday">
+                                <input type="text"
+                                       class="form-control"
+                                       placeholder="Full name..."
+                                       name="registerViewModel.FullName" />
                             </div>
-                            <div class="input-group form-group">
-                                <input type="radio"
-                                       name="registerViewModel.Gender"
-                                       value="1" /> Male
 
-                                <input type="radio" 
-                                       name="registerViewModel.Gender" 
-                                       value="0"> Female
+                            <div class="input-group form-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-phone"></i>
+                                    </span>
+                                </div>
+                                <input type="text"
+                                       class="form-control"
+                                       placeholder="Phone number..."
+                                       name="registerViewModel.PhoneNumber" />
+                            </div>
+
+                            <div class="input-group form-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-birthday-cake"></i>
+                                    </span>
+                                </div>
+                                <input type="date" id="birthdaytime" name="registerViewModel.Birthday" class="form-control">
+                            </div>
+
+                            <div class="input-group form-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-venus-mars"></i>
+                                    </span>
+                                    <select class="form-control w-100" name="registerViewModel.Gender">
+                                        <option value="true">Male</option>
+                                        <option value="false">Female</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <input type="submit"
