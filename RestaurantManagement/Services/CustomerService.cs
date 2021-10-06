@@ -23,6 +23,10 @@ namespace RestaurantManagement.Services
         {
             // Method 1: Use .NET Core
             var result = await _signInManager.PasswordSignInAsync(username, password, false, false);
+
+            if (!result.Succeeded) { 
+            
+            }
             return result.Succeeded;
 
             //// Method 2: SQL Script
@@ -36,15 +40,15 @@ namespace RestaurantManagement.Services
             //}
             //return true;
 
-            //// Method 3: LINQ
-            //var customer = await (from c in _context.Customer
-            //                      where c.UserName == username && c.PasswordHash == password
-            //                      select c).FirstOrDefaultAsync();
-            //if (customer == null)
-            //{
-            //    return false;
-            //}
-            //return true;
+            //// method 3: linq
+/*            var customer = await (from c in _context.customer
+                                 where c.username == username && c.passwordhash == password
+                                  select c).firstordefaultasync();
+            if (customer == null)
+            {
+                return false;
+            }
+            return true;*/
         }
     }
 }

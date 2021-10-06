@@ -30,6 +30,27 @@ namespace RestaurantManagement.Controllers
             return View(new LoginViewModel());
         }
 
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View(new RegisterViewModel());
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(registerViewModel);
+            }
+            var loginSucess = await _customerService.LoginAsync(registerViewModel.UserName, registerViewModel.Password);
+
+            if (!loginSucess) {
+                return RedirectToAction("Login");
+            }
+
+            return RedirectToAction("Login");
+        }
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
