@@ -62,9 +62,7 @@ namespace RestaurantManagement.Services
         {
             if (registerViewModel.Password != registerViewModel.RePassword) return false;
 
-            var customer = await (from c in _context.Customer
-                                  where c.UserName == registerViewModel.UserName
-                                  select c).FirstOrDefaultAsync();
+            var customer = await _userManager.FindByNameAsync(registerViewModel.UserName);
             if (customer != null)
             {
                 return false;
@@ -74,7 +72,6 @@ namespace RestaurantManagement.Services
             {
                 Id = System.Guid.NewGuid(),
                 UserName = registerViewModel.UserName,
-                PasswordHash = registerViewModel.Password,
                 PhoneNumber = registerViewModel.PhoneNumber,
                 FullName = registerViewModel.FullName,
                 Gender = registerViewModel.Gender,

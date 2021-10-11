@@ -63,7 +63,7 @@ namespace RestaurantManagement.Controllers
             }
             var registerSucess = await _customerService.RegisterAsync(registerViewModel);
 
-         if (!registerSucess) {
+            if (!registerSucess) {
                 return View(registerViewModel);
             }
 
