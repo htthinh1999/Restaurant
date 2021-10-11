@@ -55,6 +55,7 @@ namespace RestaurantManagement
 
             // Register Dependence Injection (DI)
             services.AddTransient<SignInManager<Customer>, SignInManager<Customer>>();
+            services.AddTransient<UserManager<Customer>, UserManager<Customer>>();
             services.AddTransient<ICustomerService, CustomerService>();
         }
 

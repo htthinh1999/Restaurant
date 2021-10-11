@@ -30,27 +30,6 @@ namespace RestaurantManagement.Controllers
             return View(new LoginViewModel());
         }
 
-        [HttpGet("/Register")]
-        public IActionResult Register()
-        {
-            return View(new RegisterViewModel());
-        }
-        [HttpPost("/Register")]
-        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(registerViewModel);
-            }
-            var registerSucess = await _customerService.RegisterAsync(registerViewModel);
-
-         if (!registerSucess) {
-                return View(registerViewModel);
-            }
-
-            return RedirectToAction("Login");
-        }
-
         [HttpPost("/Login")]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
@@ -67,6 +46,28 @@ namespace RestaurantManagement.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet("/Register")]
+        public IActionResult Register()
+        {
+            return View(new RegisterViewModel());
+        }
+
+        [HttpPost("/Register")]
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(registerViewModel);
+            }
+            var registerSucess = await _customerService.RegisterAsync(registerViewModel);
+
+            if (!registerSucess) {
+                return View(registerViewModel);
+            }
+
+            return RedirectToAction("Login");
         }
 
         public IActionResult Privacy()
