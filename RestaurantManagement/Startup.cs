@@ -56,6 +56,7 @@ namespace RestaurantManagement
             // Register Dependence Injection (DI)
             services.AddTransient<SignInManager<Customer>, SignInManager<Customer>>();
             services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IFoodService, FoodService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
