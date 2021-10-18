@@ -37,7 +37,7 @@
                     <div class="col-md-3">
                         <div class="header-logo">
                             <a href="#" class="logo">
-                                <img src="./img/logo.png" alt="">
+                                <img src="/images/logo.png" alt="">
                             </a>
                         </div>
                     </div>
@@ -65,8 +65,8 @@
                             </div>
                             <!-- /Wishlist -->
                             <!-- Cart -->
-                            <div class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                            <div>
+                                <a href="#">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span>Your Cart</span>
                                     <div class="qty">3</div>
@@ -92,7 +92,7 @@
             <div id="responsive-nav">
                 <!-- NAV -->
                 <ul class="main-nav nav navbar-nav">
-                    <li><a href="#">Home</a></li>
+                    <li><a href=@Url.Action("Index","Home")>Home</a></li>
                     <li><a href="@Url.Action("MenuFood","Menu")">Menu</a></li>
                     <li><a href="#">Đặt bàn</a></li>
                     <li><a href="#">Thanh toán</a></li>

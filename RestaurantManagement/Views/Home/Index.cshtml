@@ -1,28 +1,15 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using RestaurantManagement.Data.Entities
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
-@inject UserManager<Customer> _userManager;
 
-@{
-    var currentCustomer = await _userManager.GetUserAsync(User);
-    var currentCustomerFullName = "";
-    if (currentCustomer != null)
-        currentCustomerFullName = currentCustomer.FullName;
-}
+    <section class="home">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome @currentCustomerFullName</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+        <div class="content">
+            <h3>Welcome to My Restaurant</h3>
+            <p>Uy tín tạo nên thương hiệu</p>
+        </div>
 
-
-
-@section Scripts{
-    <script>
-        function add(a, b){
-            return a+b;
-        }
-    </script>
-}
+        <div class="image">
+            <img src="/images/home-img.png" alt="">
+        </div>
+    </section>
