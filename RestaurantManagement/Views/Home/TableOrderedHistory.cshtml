@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "Lịch sử đặt bàn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] TableHeader = new string[] {"Tên bàn", "Số người", "Bắt đầu", "Kết thúc" };
+}
+@model List<TableHistoryViewModels>
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- ASIDE -->
+                <!-- store products -->
+                    <div>
+                        <h2>Lịch sử đặt bàn</h2>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    @{
+                                        foreach (var head in TableHeader)
+                                        {
+                                            <th>
+                                                @head
+                                               
+                                            </th>
+
+                                        }
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    if (Model.Count > 0)
+                                        foreach (var Data in Model)
+                                        {
+                                            <tr>
+                                                <td>@Data.TableName</td>
+                                                <td>@Data.PeopleCount</td>
+                                                <td>@Data.From</td>
+                                                <td>@Data.To</td>
+                                            </tr>
+                                        }
+                                    else
+                                    {
+                                        <tr><td colspan="4" class="text-center">Bạn chưa từng đặt bàn</td></tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+            <!-- /STORE -->
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+
+

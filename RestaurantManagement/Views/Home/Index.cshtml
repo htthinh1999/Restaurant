@@ -7,7 +7,9 @@
 
 @{
     var currentCustomer = await _userManager.GetUserAsync(User);
-    var currentCustomerFullName = currentCustomer.FullName;
+    var currentCustomerFullName = "";
+    if (currentCustomer != null)
+        currentCustomerFullName = currentCustomer.FullName;
 }
 
 <div class="text-center">

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using RestaurantManagement.Models;
 using RestaurantManagement.Services;
 using System.Diagnostics;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace RestaurantManagement.Controllers
@@ -68,6 +69,12 @@ namespace RestaurantManagement.Controllers
             }
 
             return RedirectToAction("Login");
+        }
+
+        public async Task<IActionResult> TableOrderedHistory()
+        {
+            var TbHistory = await _customerService.GetTableHistoryAsync(User);
+            return View(TbHistory);
         }
 
         public IActionResult Privacy()
