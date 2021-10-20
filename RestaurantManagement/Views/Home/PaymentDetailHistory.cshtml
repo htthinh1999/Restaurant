@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewData["Title"] = "PaymentDetailHistory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] PaymentHeader = new string[] { "STT", "Tên món ăn", "Giá (VNĐ)", "Số Lượng", "Tổng (VNĐ)" };
+}
+@model List<PaymentDetailViewModel>
+@{ 
+    var BillId = default(Guid);
+    if (Model.Count > 0)
+    {
+        BillId = Model.FirstOrDefault().BillId;
+    }
+}
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- ASIDE -->
+            <!-- store products -->
+            <div>
+                <h2>Lịch sử thanh toán</h2>
+                <table class="table table-borderless table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            @{
+                                foreach (var head in PaymentHeader)
+                                {
+                                    <th>
+                                        @head
+
+                                    </th>
+
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int i = 1;
+                            if (Model.Count > 0)
+                                foreach (var Data in Model)
+                                {
+                                    <tr>
+                                        <td>@(i++)</td>
+                                        <td>@Data.FoodName</td>
+                                        <td>@Data.UnitPrice</td>
+                                        <td>@Data.Quantity</td>
+                                        <td>@Data.Price</td>
+                                    </tr>
+                                }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center">Bạn chưa thanh toán lần nào!!</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /STORE -->
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>

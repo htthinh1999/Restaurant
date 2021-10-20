@@ -105,6 +105,34 @@ namespace RestaurantManagement.Services
                                            }).ToListAsync();
             return tableOrderHistory;
         }
-
+        public async Task<List<PaymentHistoryViewModel>> GetPaymentHistoryAsync(ClaimsPrincipal user)
+        {
+            var customer = await _userManager.GetUserAsync(user);
+            var paymentHistory = await (from b in _context.Bill
+                                           where b.CustomerId == customer.Id
+                                           select new PaymentHistoryViewModel
+                                           {
+                                               Id = b.Id,
+                                               Total = b.Total,
+                                               PaymentMethod = b.PaymentMethod,
+                                               CreatedDate = b.CreatedDate,
+                                           }).ToListAsync();
+            return paymentHistory;
+        }
+        public async Task<List<PaymentDetailViewModel>> GetPaymentDetailAsync(Guid billId)
+        {
+            var paymentDetail = await (from b in _context.BillDetail
+                                        join g in _context.Food on b.FoodId equals g.Id
+                                        where b.BillId == billId
+                                        select new PaymentDetailViewModel
+                                        {
+                                            BillId = b.BillId,
+                                            FoodName = g.Name,
+                                            UnitPrice = b.UnitPrice,
+                                            Quantity = b.Quantity,
+                                            Price = b.Price
+                                        }).ToListAsync();
+            return paymentDetail;
+        }
     }
 }
