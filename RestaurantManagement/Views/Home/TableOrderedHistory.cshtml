@@ -38,8 +38,8 @@
                                             <tr>
                                                 <td>@Data.TableName</td>
                                                 <td>@Data.PeopleCount</td>
-                                                <td>@Data.From</td>
-                                                <td>@Data.To</td>
+                                                <td>@Data.From.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                                                <td>@Data.To.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
                                             </tr>
                                         }
                                     else

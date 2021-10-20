@@ -93,16 +93,16 @@ namespace RestaurantManagement.Services
         {
             var customer = await _userManager.GetUserAsync(user);
             var tableOrderHistory = await (from f in _context.OderTable
-                               join g in _context.Table on f.TableId equals g.Id
-                               where f.CustomerId == customer.Id
-                               select new TableHistoryViewModels
-                               {
-                                   Id = f.Id,
-                                   From = f.From,
-                                   To=f.To,
-                                   TableName = g.Name,
-                                   PeopleCount=g.PeopleCount,
-                               }).ToListAsync();
+                                           join g in _context.Table on f.TableId equals g.Id
+                                           where f.CustomerId == customer.Id
+                                           select new TableHistoryViewModels
+                                           {
+                                               Id = f.Id,
+                                               From = f.From,
+                                               To = f.To,
+                                               TableName = g.Name,
+                                               PeopleCount = g.PeopleCount,
+                                           }).ToListAsync();
             return tableOrderHistory;
         }
 
