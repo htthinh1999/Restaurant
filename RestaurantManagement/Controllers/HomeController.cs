@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RestaurantManagement.Models;
 using RestaurantManagement.Services;
+using System;
 using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -76,6 +77,16 @@ namespace RestaurantManagement.Controllers
             var TbHistory = await _customerService.GetTableHistoryAsync(User);
             return View(TbHistory);
         }
+        public async Task<IActionResult> PaymentHistory()
+        {
+            var pmHistory = await _customerService.GetPaymentHistoryAsync(User);
+            return View(pmHistory);
+        }
+        public async Task<IActionResult> PaymentDetailHistory(Guid id)
+        {
+            var paymentDetail = await _customerService.GetPaymentDetailAsync(id);
+            return View(paymentDetail);
+        }
 
         public IActionResult Privacy()
         {
@@ -87,5 +98,6 @@ namespace RestaurantManagement.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }
