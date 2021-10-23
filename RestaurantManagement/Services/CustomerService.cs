@@ -92,6 +92,8 @@ namespace RestaurantManagement.Services
         public async Task<List<TableHistoryViewModels>> GetTableHistoryAsync(ClaimsPrincipal user)
         {
             var customer = await _userManager.GetUserAsync(user);
+            if (customer == null)
+                return new List<TableHistoryViewModels>();
             var tableOrderHistory = await (from f in _context.OderTable
                                            join g in _context.Table on f.TableId equals g.Id
                                            where f.CustomerId == customer.Id
@@ -108,8 +110,10 @@ namespace RestaurantManagement.Services
         public async Task<List<PaymentHistoryViewModel>> GetPaymentHistoryAsync(ClaimsPrincipal user)
         {
             var customer = await _userManager.GetUserAsync(user);
+            if (customer == null)
+                return new List<PaymentHistoryViewModel>();
             var paymentHistory = await (from b in _context.Bill
-                                           where b.CustomerId == customer.Id
+                                           where b.CustomerId == customer.Id && b.PaymentMethod != null && b.PaymentMethod !=string.Empty
                                            select new PaymentHistoryViewModel
                                            {
                                                Id = b.Id,
