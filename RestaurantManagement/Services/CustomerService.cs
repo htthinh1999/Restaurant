@@ -113,7 +113,7 @@ namespace RestaurantManagement.Services
             if (customer == null)
                 return new List<PaymentHistoryViewModel>();
             var paymentHistory = await (from b in _context.Bill
-                                           where b.CustomerId == customer.Id && b.PaymentMethod != null
+                                           where b.CustomerId == customer.Id && b.PaymentMethod != null && b.PaymentMethod !=string.Empty
                                            select new PaymentHistoryViewModel
                                            {
                                                Id = b.Id,
