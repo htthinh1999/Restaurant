@@ -25,6 +25,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Constants\" />
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 </Project>
