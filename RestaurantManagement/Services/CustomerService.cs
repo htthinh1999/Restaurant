@@ -89,6 +89,10 @@ namespace RestaurantManagement.Services
             }
             return false;
         }
+        public async Task SignOutAsync()
+        {
+            await _signInManager.SignOutAsync();
+        }
         public async Task<List<TableHistoryViewModels>> GetTableHistoryAsync(ClaimsPrincipal user)
         {
             var customer = await _userManager.GetUserAsync(user);

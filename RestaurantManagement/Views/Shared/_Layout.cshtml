@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using RestaurantManagement.Data.Entities
+@inject SignInManager<Customer> SignInManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -22,8 +25,16 @@
                     <li><a href="#"><i class="fa fa-map-marker"></i> Ho Chi Minh</a></li>
                 </ul>
                 <ul class="header-links pull-right">
-                    <li><a href="@Url.Action("Login","Home")"><i class="fa fa-user"></i>Login</a></li>
-                </ul>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li style="color:white;">Hi @User.Identity.Name　|</li>
+                        <li><a href="@Url.Action("Logout","Home")"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+                        }
+                        else
+                        {
+                        <li><a href="@Url.Action("Login","Home")"><i class="fa fa-user"></i>Login</a></li>
+                        }
+                    </ul>
             </div>
         </div>
         <!-- /TOP HEADER -->
@@ -106,7 +117,6 @@
         <!-- /container -->
     </nav>
     <!-- /NAVIGATION -->
-
     <!--BODY-->
     <div class="container">
         <main role="main" class="pb-3">
@@ -114,7 +124,6 @@
         </main>
     </div>
     <!--/BODY-->
-
     <!-- FOOTER -->
     <footer id="footer">
         <!-- top footer -->
