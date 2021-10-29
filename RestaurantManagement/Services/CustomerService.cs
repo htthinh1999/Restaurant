@@ -144,7 +144,7 @@ namespace RestaurantManagement.Services
             if (customer == null)
                 return new CartViewModel();
             var cart = await (from f in _context.Bill
-                              where f.CustomerId == customer.Id && (f.PaymentMethod==string.Empty || f.PaymentMethod==null)
+                              where f.CustomerId == customer.Id && f.PaymentMethod == string.Empty
                               select new CartViewModel
                               {
                                   Total=f.Total,
