@@ -13,5 +13,7 @@ namespace RestaurantManagement.Services
         Task<List<TableHistoryViewModels>> GetTableHistoryAsync(ClaimsPrincipal user);
         Task<List<PaymentHistoryViewModel>> GetPaymentHistoryAsync(ClaimsPrincipal user);
         Task<List<PaymentDetailViewModel>> GetPaymentDetailAsync(Guid billId);
+        Task<CartViewModel> ShowToCartAsync(ClaimsPrincipal user);
+        Task<CartViewModel> ShowToCartAsync(ClaimsPrincipal user, CartDetailViewModel cartdetailvm);
     }
 }
