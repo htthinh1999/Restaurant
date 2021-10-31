@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using RestaurantManagement.Data.Entities
 @inject SignInManager<Customer> SignInManager
+@inject UserManager<Customer> UserManager
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,14 +28,14 @@
                 <ul class="header-links pull-right">
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        <li style="color:white;">Hi @User.Identity.Name　|</li>
+                        <li style="color:white;">Chào @UserManager.GetUserAsync(User).Result.FullName　|</li>
                         <li><a href="@Url.Action("Logout","Home")"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
-                        }
-                        else
-                        {
+                    }
+                    else
+                    {
                         <li><a href="@Url.Action("Login","Home")"><i class="fa fa-user"></i>Login</a></li>
-                        }
-                    </ul>
+                    }
+                </ul>
             </div>
         </div>
         <!-- /TOP HEADER -->
