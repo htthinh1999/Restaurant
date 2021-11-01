@@ -49,7 +49,7 @@ namespace RestaurantManagement.Services
                               }).FirstOrDefaultAsync();
             return food;
         }
-        public async void InsertFoodAsync(ClaimsPrincipal user, FoodViewModel food)
+        public async Task<bool> InsertFoodAsync(ClaimsPrincipal user, FoodViewModel food)
         {
             var customer = await _userManager.GetUserAsync(user);
             var currentCart = await (from b in _context.Bill
@@ -83,7 +83,7 @@ namespace RestaurantManagement.Services
                     _context.BillDetail.Add(newBillDetail);
                 }
                 _context.SaveChanges();
-                return;
+                return true;
             }
             else
             {
@@ -105,7 +105,7 @@ namespace RestaurantManagement.Services
                     Price = food.insertFoodViewModel.UnitPrice * food.insertFoodViewModel.Quantity
                 };
                 _context.BillDetail.Add(newBillDetail);
-                return;
+                return true;
             }
         }
     }
