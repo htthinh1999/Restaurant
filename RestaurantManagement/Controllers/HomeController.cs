@@ -79,6 +79,10 @@ namespace RestaurantManagement.Controllers
         }
         public async Task<IActionResult> PaymentHistory()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             var pmHistory = await _customerService.GetPaymentHistoryAsync(User);
             return View(pmHistory);
         }
