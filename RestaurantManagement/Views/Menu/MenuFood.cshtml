@@ -3,6 +3,7 @@
     ViewData["Title"] = "MenuFood";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @model List<FoodViewModel>
 <div class="section">
     <!-- container -->
@@ -71,9 +72,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- aside Widget -->
-                <!-- /aside Widget -->
             </div>
             <!-- /ASIDE -->
             <!-- STORE -->
@@ -83,6 +81,10 @@
                      @foreach (var food in Model)
                      {
                         <!-- product -->
+                    <form asp-action="InsertFoodToCart" asp-controller="Menu" method="post">
+                        <input type="hidden" name="food.insertFoodViewModel.FoodId" value="@food.Id" />
+                        <input type="hidden" name="food.insertFoodViewModel.Quantity" value=1 />
+                        <input type="hidden" name="food.insertFoodViewModel.Price" value="@food.UnitPrice" />
                         <div class="col-md-4 col-xs-6">
                             <div class="product">
                                 <div class="product-img">
@@ -108,13 +110,14 @@
                                     </div>
                                 </div>
                                 <div class="add-to-cart">
-                                    <button class="add-to-cart-btn">
+                                    <button class="add-to-cart-btn" type="submit">
                                         <i class="fa fa-shopping-cart"></i> add to
                                         cart
                                     </button>
                                 </div>
                             </div>
                         </div>
+                    </form>
                         <!-- /product -->
                      }
                 </div>

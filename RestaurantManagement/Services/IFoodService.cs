@@ -1,5 +1,6 @@
 ﻿using RestaurantManagement.Models;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace RestaurantManagement.Services
@@ -8,5 +9,6 @@ namespace RestaurantManagement.Services
     {
         Task<List<FoodViewModel>> GetAllFoodAsync();
         Task<FoodViewModel> GetFoodByIdAsync(int id);
+        void InsertFoodAsync(ClaimsPrincipal user, FoodViewModel food);
     }
 }

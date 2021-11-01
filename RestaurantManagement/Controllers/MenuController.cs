@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RestaurantManagement.Models;
 using RestaurantManagement.Services;
 
 namespace RestaurantManagement.Controllers
@@ -28,6 +29,11 @@ namespace RestaurantManagement.Controllers
             var food = await _foodService.GetFoodByIdAsync(id);
             return View(food);
         }
-
+        [HttpPost]
+        public IActionResult InsertFoodToCart(FoodViewModel food)
+        {
+            _foodService.InsertFoodAsync(User, food);
+            return RedirectToAction("MenuFood");
+        }
     }
 }
