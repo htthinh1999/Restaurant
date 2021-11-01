@@ -9,8 +9,6 @@ namespace RestaurantManagement.Models
     public class InsertFoodViewModel
     {
         [Required()]
-        public Guid CustomerId { get; set; }
-        [Required()]
         public Guid BillId { get; set; }
         [Required()]
         public int FoodId { get; set; }
