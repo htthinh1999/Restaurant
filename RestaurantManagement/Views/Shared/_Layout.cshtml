@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using RestaurantManagement.Data.Entities
+@inject SignInManager<Customer> SignInManager
+@inject UserManager<Customer> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -22,7 +26,7 @@
                     <li><a href="#"><i class="fa fa-map-marker"></i> Ho Chi Minh</a></li>
                 </ul>
                 <ul class="header-links pull-right">
-                    <li><a href="@Url.Action("Login","Home")"><i class="fa fa-user"></i>Login</a></li>
+                    <li><a href="@Url.Action("Login", "Home")"><i class="fa fa-user"></i>Login</a></li>
                 </ul>
             </div>
         </div>
@@ -92,17 +96,17 @@
             <div id="responsive-nav">
                 <!-- NAV -->
                 <ul class="main-nav nav navbar-nav">
-                    <li><a href=@Url.Action("Index","Home")>Home</a></li>
-                    <li><a href="@Url.Action("MenuFood","Menu")">Menu</a></li>
+                    <li><a href=@Url.Action("Index", "Home")>Home</a></li>
+                    <li><a href="@Url.Action("MenuFood", "Menu")">Menu</a></li>
                     <li><a href="#">Thanh toán</a></li>
                     @{
                         if (!SignInManager.IsSignedIn(User) || UserManager.GetUserAsync(User).Result.VIP == true)
                         {
                             <li><a href="#">Đặt bàn</a></li>
-                            <li><a href="@Url.Action("TableOrderedHistory","Home")">Lịch sử đặt bàn</a></li>
-                            <li><a href="@Url.Action("PaymentHistory","Home")">Lịch sử thanh toán</a></li>
+                            <li><a href="@Url.Action("TableOrderedHistory", "Home")">Lịch sử đặt bàn</a></li>
                         }
                     }
+                    <li><a href="@Url.Action("PaymentHistory", "Home")">Lịch sử thanh toán</a></li>
                 </ul>
                 <!-- /NAV -->
             </div>
@@ -111,7 +115,6 @@
         <!-- /container -->
     </nav>
     <!-- /NAVIGATION -->
-
     <!--BODY-->
     <div class="container">
         <main role="main" class="pb-3">
@@ -119,7 +122,6 @@
         </main>
     </div>
     <!--/BODY-->
-
     <!-- FOOTER -->
     <footer id="footer">
         <!-- top footer -->
