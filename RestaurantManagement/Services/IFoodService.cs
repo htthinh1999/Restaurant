@@ -9,6 +9,6 @@ namespace RestaurantManagement.Services
     {
         Task<List<FoodViewModel>> GetAllFoodAsync();
         Task<FoodViewModel> GetFoodByIdAsync(int id);
-        Task<bool> InsertFoodAsync(ClaimsPrincipal user, FoodViewModel food);
+        Task InsertFoodAsync(ClaimsPrincipal user, FoodViewModel food);
     }
 }
