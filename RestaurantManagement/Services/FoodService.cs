@@ -53,9 +53,7 @@ namespace RestaurantManagement.Services
         {
             var customer = await _userManager.GetUserAsync(user);
             var currentCart = await (from b in _context.Bill
-                                     where b.CustomerId == customer.Id
-                                     && (b.PaymentMethod == string.Empty
-                                           || b.PaymentMethod == null)
+                                     where b.CustomerId == customer.Id && b.PaymentMethod == string.Empty
                                      select b).FirstOrDefaultAsync();
             var billId = new Guid();
             if (currentCart != null)
