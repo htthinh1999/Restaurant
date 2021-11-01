@@ -30,9 +30,9 @@ namespace RestaurantManagement.Controllers
             return View(food);
         }
         [HttpPost]
-        public IActionResult InsertFoodToCart(FoodViewModel food)
+        public async Task<IActionResult> InsertFoodToCart(FoodViewModel food)
         {
-            _foodService.InsertFoodAsync(User, food);
+            await _foodService.InsertFoodAsync(User, food);
             return RedirectToAction("MenuFood");
         }
     }
