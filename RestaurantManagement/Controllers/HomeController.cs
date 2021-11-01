@@ -88,10 +88,20 @@ namespace RestaurantManagement.Controllers
             return View(paymentDetail);
         }
 
+        [HttpGet("/Payment")]
         public async Task<IActionResult> Payment()
         {
-            var billToPay = await _customerService.GetPaymentAsync(User);
-            return View(billToPay);
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Home");
+            var payment = await _customerService.GetBillToPayAsync(User);
+            return View(payment);
+        }
+
+        [HttpPost("/Payment")]
+        public async Task<IActionResult> Payment(PaymentViewModel billPaymentVM)
+        {
+            await _customerService.UpdatePaymentMethodAsync(User, billPaymentVM);
+            return RedirectToAction("MenuFood", "Menu");
         }
 
         public IActionResult Privacy()

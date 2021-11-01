@@ -194,7 +194,7 @@ span.rth {
         span.rth a#return-home:before,
         span.rth a#return-home:after {
             position: absolute;
-            content: "Hủy thanh toán";
+            content: "Trở lại";
             height: 55px;
             width: 180px;
             display: flex;
@@ -229,7 +229,7 @@ img#airpay-QR-code {
     margin-bottom: 30px;
 }
 
-a.finish-payment {
+button.finish-payment {
     position: relative;
     padding: 8px 20px;
     display: block;
@@ -238,9 +238,10 @@ a.finish-payment {
     overflow: hidden;
     border-radius: 40px;
     margin: auto;
+    border: none;
 }
 
-    a.finish-payment span {
+    button.finish-payment span {
         position: relative;
         color: rgb(9, 45, 248);
         font-size: 20px;
@@ -249,7 +250,7 @@ a.finish-payment {
         z-index: 1;
     }
 
-    a.finish-payment .liquid {
+    button.finish-payment .liquid {
         position: absolute;
         top: -80px;
         left: 0;
@@ -260,8 +261,8 @@ a.finish-payment {
         transition: .5s;
     }
 
-        a.finish-payment .liquid::after,
-        a.finish-payment .liquid::before {
+        button.finish-payment .liquid::after,
+        button.finish-payment .liquid::before {
             content: '';
             width: 200%;
             height: 200%;
@@ -272,20 +273,19 @@ a.finish-payment {
             background: rgb(185, 238, 88);
         }
 
-        a.finish-payment .liquid::before {
+        button.finish-payment .liquid::before {
             border-radius: 45%;
             background: rgb(226, 214, 45);
             animation: animate 5s linear infinite;
         }
 
-        a.finish-payment .liquid::after {
+        button.finish-payment .liquid::after {
             border-radius: 40%;
             background: rgb(188, 240, 128);
-            ;
             animation: animate 10s linear infinite;
         }
 
-    a.finish-payment:hover .liquid {
+    button.finish-payment:hover .liquid {
         top: -120px;
     }
 
@@ -665,3 +665,45 @@ a.finish-payment {
         transform: translateY(0);
     }
 }
+
+.button-three {
+    position: relative;
+    background-color: #007bff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    font-size: 23px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+    .button-three:hover {
+        background: #3e97f7;
+        box-shadow: 0px 2px 10px 5px #7eb3cf;
+        color: rgb(46, 45, 45);
+    }
+
+    .button-three:after {
+        content: "";
+        background: #f1cf46;
+        display: block;
+        position: absolute;
+        padding-top: 300%;
+        padding-left: 350%;
+        margin-left: -20px !important;
+        margin-top: -120%;
+        opacity: 0;
+        transition: all 0.8s
+    }
+
+    .button-three:active:after {
+        padding: 0;
+        margin: 0;
+        opacity: 1;
+        transition: 0s
+    }
