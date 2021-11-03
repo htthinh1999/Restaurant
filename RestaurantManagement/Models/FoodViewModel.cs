@@ -15,6 +15,6 @@ namespace RestaurantManagement.Models
         public string Category { get; set; }
         public string Description { get; set; }
         public string ImageURL { get; set; }
-        public InsertFoodViewModel insertFoodViewModel { get; set; }
+        public InsertFoodViewModel InsertFoodViewModel { get; set; }
     }
 }

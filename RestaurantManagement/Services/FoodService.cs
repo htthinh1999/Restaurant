@@ -61,11 +61,11 @@ namespace RestaurantManagement.Services
             {
                 billId = currentCart.Id;
                 var currentFoodInCart = await (from bd in _context.BillDetail
-                                               where bd.BillId == billId && bd.FoodId == food.insertFoodViewModel.FoodId
+                                               where bd.BillId == billId && bd.FoodId == food.InsertFoodViewModel.FoodId
                                                select bd).FirstOrDefaultAsync();
                 if (currentFoodInCart != null)
                 {
-                    currentFoodInCart.Quantity += food.insertFoodViewModel.Quantity;
+                    currentFoodInCart.Quantity += food.InsertFoodViewModel.Quantity;
                     currentFoodInCart.Price = currentFoodInCart.Quantity * currentFoodInCart.UnitPrice;
                     _context.SaveChanges();
                     currentCart.Total = (from bd in _context.BillDetail
@@ -77,12 +77,12 @@ namespace RestaurantManagement.Services
                     var newBillDetail = new BillDetail()
                     {
                         BillId = billId,
-                        FoodId = food.insertFoodViewModel.FoodId,
-                        UnitPrice = food.insertFoodViewModel.UnitPrice,
-                        Quantity = food.insertFoodViewModel.Quantity,
-                        Price = food.insertFoodViewModel.UnitPrice * food.insertFoodViewModel.Quantity
+                        FoodId = food.InsertFoodViewModel.FoodId,
+                        UnitPrice = food.InsertFoodViewModel.UnitPrice,
+                        Quantity = food.InsertFoodViewModel.Quantity,
+                        Price = food.InsertFoodViewModel.UnitPrice * food.InsertFoodViewModel.Quantity
                     };
-                    currentCart.Total += food.insertFoodViewModel.UnitPrice * food.insertFoodViewModel.Quantity;
+                    currentCart.Total += food.InsertFoodViewModel.UnitPrice * food.InsertFoodViewModel.Quantity;
                     _context.BillDetail.Add(newBillDetail);
                 }
                 _context.SaveChanges();
@@ -94,7 +94,7 @@ namespace RestaurantManagement.Services
                 {
                     Id = billId,
                     CustomerId = customer.Id,
-                    Total = food.insertFoodViewModel.Quantity * food.insertFoodViewModel.UnitPrice,
+                    Total = food.InsertFoodViewModel.Quantity * food.InsertFoodViewModel.UnitPrice,
                     PaymentMethod = string.Empty,
                     CreatedDate = DateTime.Now
                 };
@@ -102,10 +102,10 @@ namespace RestaurantManagement.Services
                 var newBillDetail = new BillDetail()
                 {
                     BillId = billId,
-                    FoodId = food.insertFoodViewModel.FoodId,
-                    UnitPrice = food.insertFoodViewModel.UnitPrice,
-                    Quantity = food.insertFoodViewModel.Quantity,
-                    Price = food.insertFoodViewModel.UnitPrice * food.insertFoodViewModel.Quantity
+                    FoodId = food.InsertFoodViewModel.FoodId,
+                    UnitPrice = food.InsertFoodViewModel.UnitPrice,
+                    Quantity = food.InsertFoodViewModel.Quantity,
+                    Price = food.InsertFoodViewModel.UnitPrice * food.InsertFoodViewModel.Quantity
                 };
                 _context.BillDetail.Add(newBillDetail);
                 _context.SaveChanges();
@@ -114,8 +114,8 @@ namespace RestaurantManagement.Services
                                        select b).FirstOrDefaultAsync();
                 newBillId.Total = (from bd in _context.BillDetail
                                    where bd.BillId == billId
-                                   select bd).Sum(x => x.Price);
-                return;
+                                   select bd).Sum(x => x.Price); 
+                _context.SaveChanges();
             }
         }
     }
