@@ -10,5 +10,6 @@ namespace RestaurantManagement.Services
         Task<List<FoodViewModel>> GetAllFoodAsync();
         Task<FoodViewModel> GetFoodByIdAsync(int id);
         Task InsertFoodAsync(ClaimsPrincipal user, FoodViewModel food);
+        Task<List<FoodViewModel>> GetFoodByFilterAsync(string[] listcategory);
     }
 }

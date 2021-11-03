@@ -17,12 +17,16 @@ namespace RestaurantManagement.Controllers
             _foodService = foodService;
         }
         // GET: MenuController
-        public async Task<IActionResult> MenuFood()
+        public async Task<IActionResult> MenuFood(string[] listcategory)
         {
-            var foods = await _foodService.GetAllFoodAsync();
+            var foods = new List<FoodViewModel>();
+            if (listcategory.Count() == 0)
+            {
+                foods = await _foodService.GetAllFoodAsync();
+            }
+            else foods = await _foodService.GetFoodByFilterAsync(listcategory);
             return View(foods);
         }
-
         // GET: MenuController/Details/5
         public async Task<IActionResult> Details(int id)
         {

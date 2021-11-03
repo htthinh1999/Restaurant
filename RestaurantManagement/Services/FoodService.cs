@@ -34,6 +34,20 @@ namespace RestaurantManagement.Services
                                }).ToListAsync();
             return foods;
         }
+        public async Task<List<FoodViewModel>> GetFoodByFilterAsync(string[] listcategory)
+        {
+            var foods = await (from f in _context.Food
+                               where listcategory.Contains(f.Category)
+                               select new FoodViewModel
+                               {
+                                   Id = f.Id,
+                                   Category = f.Category,
+                                   Name = f.Name,
+                                   UnitPrice = f.UnitPrice,
+                                   ImageURL = f.ImageURL
+                               }).ToListAsync();
+            return foods;
+        }
         public async Task<FoodViewModel> GetFoodByIdAsync(int id)
         {
             var food = await (from f in _context.Food
