@@ -87,7 +87,28 @@ namespace RestaurantManagement.Controllers
             var paymentDetail = await _customerService.GetPaymentDetailAsync(id);
             return View(paymentDetail);
         }
-
+        [HttpGet]
+        public async Task<IActionResult> ShowToCart()
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Home");
+            var cart = await _customerService.ShowToCartAsync(User);
+            return View(cart);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ShowToCart(CartDetailViewModel cartdetailvm)
+        {
+            if (cartdetailvm.Type == "-")
+            {
+                cartdetailvm.Quantity--;
+            }
+            if(cartdetailvm.Type=="+")
+            {
+                cartdetailvm.Quantity++;
+            }    
+            var cart = await _customerService.ShowToCartAsync(User,cartdetailvm);
+            return View(cart);
+        }
         public IActionResult Privacy()
         {
             return View();
