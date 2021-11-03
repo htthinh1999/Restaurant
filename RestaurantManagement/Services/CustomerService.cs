@@ -153,7 +153,7 @@ namespace RestaurantManagement.Services
                                  select new BillViewModel
                                  {
                                     FoodName = f.Name,
-                                    UnitPrice = f.UnitPrice,
+                                    UnitPrice = bd.UnitPrice,
                                     Quantity = bd.Quantity,
                                     Price = bd.Price
                                  }).ToListAsync();
@@ -179,12 +179,11 @@ namespace RestaurantManagement.Services
             if (billPayment.Count() > 10)
                 customer.VIP = true;
 
-            // Update payment method and total include VAT (10%)
+            // Update payment method and total
             var update = (from u in billPayment
                           where u.PaymentMethod == string.Empty
                           select u).FirstOrDefault();
             update.PaymentMethod = payment.PaymentMethod;
-            update.Total = update.Total * 11 / 10;
 
             _context.SaveChanges();
         }
