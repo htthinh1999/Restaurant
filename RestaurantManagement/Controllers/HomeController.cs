@@ -104,6 +104,29 @@ namespace RestaurantManagement.Controllers
             return RedirectToAction("MenuFood", "Menu");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ShowToCart()
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Home");
+            var cart = await _customerService.ShowToCartAsync(User);
+            return View(cart);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ShowToCart(CartDetailViewModel cartdetailvm)
+        {
+            if (cartdetailvm.Type == "-")
+            {
+                cartdetailvm.Quantity--;
+            }
+            if(cartdetailvm.Type=="+")
+            {
+                cartdetailvm.Quantity++;
+            }    
+            var cart = await _customerService.ShowToCartAsync(User,cartdetailvm);
+            return View(cart);
+        }
+        
         public IActionResult Privacy()
         {
             return View();
@@ -114,6 +137,11 @@ namespace RestaurantManagement.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
+        [Route("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _customerService.SignOutAsync();
+            return RedirectToAction("Index");
+        }
     }
 }
