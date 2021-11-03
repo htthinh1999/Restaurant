@@ -28,7 +28,7 @@
                 <ul class="header-links pull-right">
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        <li style="color:white;">Chào @UserManager.GetUserAsync(User).Result.FullName　|</li>
+                        <li style="color:white;">Chào @((await UserManager.GetUserAsync(User)).FullName)　|</li>
                         <li><a href="@Url.Action("Logout","Home")"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
                     }
                     else
@@ -108,7 +108,7 @@
                     <li><a href="@Url.Action("MenuFood", "Menu")">Menu</a></li>
                     <li><a href="#">Thanh toán</a></li>
                     @{
-                        if (!SignInManager.IsSignedIn(User) || UserManager.GetUserAsync(User).Result.VIP == true)
+                        if (!SignInManager.IsSignedIn(User) || (await UserManager.GetUserAsync(User)).VIP)
                         {
                             <li><a href="#">Đặt bàn</a></li>
                             <li><a href="@Url.Action("TableOrderedHistory", "Home")">Lịch sử đặt bàn</a></li>
