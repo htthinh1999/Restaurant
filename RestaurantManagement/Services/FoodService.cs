@@ -40,6 +40,7 @@ namespace RestaurantManagement.Services
                               where f.Id == id
                               select new FoodViewModel
                               {
+                                  Id = f.Id,
                                   Category = f.Category,
                                   Name = f.Name,
                                   UnitPrice = f.UnitPrice,
@@ -55,7 +56,7 @@ namespace RestaurantManagement.Services
             var currentCart = await (from b in _context.Bill
                                      where b.CustomerId == customer.Id && b.PaymentMethod == string.Empty
                                      select b).FirstOrDefaultAsync();
-            var billId = new Guid();
+            var billId = System.Guid.NewGuid();
             if (currentCart != null)
             {
                 billId = currentCart.Id;
@@ -66,6 +67,7 @@ namespace RestaurantManagement.Services
                 {
                     currentFoodInCart.Quantity += food.insertFoodViewModel.Quantity;
                     currentFoodInCart.Price = currentFoodInCart.Quantity * currentFoodInCart.UnitPrice;
+                    _context.SaveChanges();
                     currentCart.Total = (from bd in _context.BillDetail
                                          where bd.BillId == billId
                                          select bd).Sum(x => x.Price);
@@ -80,6 +82,7 @@ namespace RestaurantManagement.Services
                         Quantity = food.insertFoodViewModel.Quantity,
                         Price = food.insertFoodViewModel.UnitPrice * food.insertFoodViewModel.Quantity
                     };
+                    currentCart.Total += food.insertFoodViewModel.UnitPrice * food.insertFoodViewModel.Quantity;
                     _context.BillDetail.Add(newBillDetail);
                 }
                 _context.SaveChanges();
@@ -105,6 +108,13 @@ namespace RestaurantManagement.Services
                     Price = food.insertFoodViewModel.UnitPrice * food.insertFoodViewModel.Quantity
                 };
                 _context.BillDetail.Add(newBillDetail);
+                _context.SaveChanges();
+                var newBillId = await (from b in _context.Bill
+                                       where b.Id == billId
+                                       select b).FirstOrDefaultAsync();
+                newBillId.Total = (from bd in _context.BillDetail
+                                   where bd.BillId == billId
+                                   select bd).Sum(x => x.Price);
                 return;
             }
         }
