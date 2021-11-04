@@ -21,10 +21,8 @@ namespace RestaurantManagement.Controllers
         {
             var foods = new List<FoodViewModel>();
             if (listcategory.Count() == 0)
-            {
                 foods = await _foodService.GetAllFoodAsync();
-            }
-            else foods = await _foodService.GetFoodByFilterAsync(listcategory);
+            else foods = await _foodService.GetAllFoodAsync(listcategory);
             return View(foods);
         }
         // GET: MenuController/Details/5
