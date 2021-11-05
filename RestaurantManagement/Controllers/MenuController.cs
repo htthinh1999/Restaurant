@@ -19,10 +19,7 @@ namespace RestaurantManagement.Controllers
         // GET: MenuController
         public async Task<IActionResult> MenuFood(string[] listcategory)
         {
-            var foods = new List<FoodViewModel>();
-            if (listcategory.Count() == 0)
-                foods = await _foodService.GetAllFoodAsync();
-            else foods = await _foodService.GetAllFoodAsync(listcategory);
+           var foods = await _foodService.GetAllFoodAsync(listcategory);
             return View(foods);
         }
         // GET: MenuController/Details/5

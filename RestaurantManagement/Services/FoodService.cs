@@ -21,9 +21,12 @@ namespace RestaurantManagement.Services
             _userManager = userManager;
         }
 
-        public async Task<List<FoodViewModel>> GetAllFoodAsync()
+        public async Task<List<FoodViewModel>> GetAllFoodAsync(string[] listcategory)
         {
-            var foods = await (from f in _context.Food
+            var foods = new List<FoodViewModel>();
+            if (listcategory.Count() == 0)
+            {
+                foods = await (from f in _context.Food
                                select new FoodViewModel
                                {
                                    Id = f.Id,
@@ -32,11 +35,10 @@ namespace RestaurantManagement.Services
                                    UnitPrice = f.UnitPrice,
                                    ImageURL = f.ImageURL
                                }).ToListAsync();
-            return foods;
-        }
-        public async Task<List<FoodViewModel>> GetAllFoodAsync(string[] listcategory)
-        {
-            var foods = await (from f in _context.Food
+            }
+            else 
+            {
+                foods = await (from f in _context.Food
                                where listcategory.Contains(f.Category)
                                select new FoodViewModel
                                {
@@ -46,6 +48,7 @@ namespace RestaurantManagement.Services
                                    UnitPrice = f.UnitPrice,
                                    ImageURL = f.ImageURL
                                }).ToListAsync();
+            }
             return foods;
         }
         public async Task<FoodViewModel> GetFoodByIdAsync(int id)
