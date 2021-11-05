@@ -122,16 +122,19 @@ namespace RestaurantManagement.Services
         public async Task<List<PaymentDetailViewModel>> GetPaymentDetailAsync(Guid billId)
         {
             var paymentDetail = await (from b in _context.BillDetail
-                                        join g in _context.Food on b.FoodId equals g.Id
-                                        where b.BillId == billId
-                                        select new PaymentDetailViewModel
-                                        {
-                                            BillId = b.BillId,
-                                            FoodName = g.Name,
-                                            UnitPrice = b.UnitPrice,
-                                            Quantity = b.Quantity,
-                                            Price = b.Price
-                                        }).ToListAsync();
+                                       join g in _context.Food on b.FoodId equals g.Id
+                                       where b.BillId == billId
+                                       select new PaymentDetailViewModel
+                                       {
+                                           BillId = b.BillId,
+                                           FoodName = g.Name,
+                                           UnitPrice = b.UnitPrice,
+                                           Quantity = b.Quantity,
+                                           Price = b.Price,
+                                           Total = (from b in _context.Bill
+                                                    where b.Id == billId
+                                                    select b.Total).FirstOrDefault()
+                                       }).ToListAsync();
             return paymentDetail;
         }
     }

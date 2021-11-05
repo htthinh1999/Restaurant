@@ -22,13 +22,13 @@
             <!-- store products -->
             <div>
                 <h2>Lịch sử thanh toán</h2>
-                <table class="table table-borderless table-striped table-hover">
+                <table class="table table-bordered">
                     <thead class="thead-dark">
                         <tr>
                             @{
                                 foreach (var head in PaymentHeader)
                                 {
-                                    <th>
+                                    <th class="text-center">
                                         @head
 
                                     </th>
@@ -41,16 +41,39 @@
                         @{
                             int i = 1;
                             if (Model.Count > 0)
+                            {
                                 foreach (var Data in Model)
                                 {
                                     <tr>
-                                        <td>@(i++)</td>
-                                        <td>@Data.FoodName</td>
-                                        <td>@Data.UnitPrice</td>
-                                        <td>@Data.Quantity</td>
-                                        <td>@Data.Price</td>
+                                        <td class="text-center">@(i++)</td>
+                                        <td class="text-center">@Data.FoodName</td>
+                                        <td class="text-center">@Data.UnitPrice</td>
+                                        <td class="text-center">@Data.Quantity</td>
+                                        <td class="text-center">@Data.Price</td>
                                     </tr>
                                 }
+                                <tr class="text-right">
+                                    <td colspan="5" style="font-size:20px">
+                                        <b>
+                                            Tổng tiền: @Model.First().Total VNĐ
+                                        </b>
+                                    </td>
+                                </tr>
+                                <tr class="text-right">
+                                    <td colspan="5" style="font-size:20px">
+                                        <b>
+                                            Thuế VAT: @(Model.First().Total / 10) VNĐ
+                                        </b>
+                                    </td>
+                                </tr>
+                                <tr class="text-right">
+                                    <td colspan="5" style="font-size:20px">
+                                        <b>
+                                            Số tiền phải thanh toán: @(Model.First().Total / 10 * 11) VNĐ
+                                        </b>
+                                    </td>
+                                </tr>
+                            }
                             else
                             {
                                 <tr>
