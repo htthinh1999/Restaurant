@@ -26,7 +26,15 @@
                     <li><a href="#"><i class="fa fa-map-marker"></i> Ho Chi Minh</a></li>
                 </ul>
                 <ul class="header-links pull-right">
-                    <li><a href="@Url.Action("Login", "Home")"><i class="fa fa-user"></i>Login</a></li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li style="color:white;">Chào @((await UserManager.GetUserAsync(User)).FullName)　|</li>
+                        <li><a href="@Url.Action("Logout","Home")"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("Login","Home")"><i class="fa fa-user"></i>Login</a></li>
+                    }
                 </ul>
             </div>
         </div>
@@ -70,7 +78,7 @@
                             <!-- /Wishlist -->
                             <!-- Cart -->
                             <div>
-                                <a href="#">
+                                <a href="@Url.Action("ShowToCart","Home")">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span>Your Cart</span>
                                     <div class="qty">3</div>
@@ -96,13 +104,19 @@
             <div id="responsive-nav">
                 <!-- NAV -->
                 <ul class="main-nav nav navbar-nav">
-                    <li><a href=@Url.Action("Index","Home")>Home</a></li>
-                    <li><a href="@Url.Action("MenuFood","Menu")">Menu</a></li>
-                    <li><a href="#">Đặt bàn</a></li>
+                    <li><a href=@Url.Action("Index", "Home")>Home</a></li>
+                    <li><a href="@Url.Action("MenuFood", "Menu")">Menu</a></li>
                     <li><a href="#">Thanh toán</a></li>
-                    <li><a href="@Url.Action("TableOrderedHistory","Home")">Lịch sử đặt bàn</a></li>
-                    <li><a href="@Url.Action("PaymentHistory","Home")">Lịch sử thanh toán</a></li>
-                    <!-- /NAV -->
+                    @{
+                        if (!SignInManager.IsSignedIn(User) || (await UserManager.GetUserAsync(User)).VIP)
+                        {
+                            <li><a href="#">Đặt bàn</a></li>
+                            <li><a href="@Url.Action("TableOrderedHistory", "Home")">Lịch sử đặt bàn</a></li>
+                        }
+                    }
+                    <li><a href="@Url.Action("PaymentHistory", "Home")">Lịch sử thanh toán</a></li>
+                </ul>
+                <!-- /NAV -->
             </div>
             <!-- /responsive-nav -->
         </div>
@@ -140,7 +154,7 @@
                             <h3 class="footer-title">Các kiểu thức ăn</h3>
                             <ul class="footer-links">
                                 <li>Món khai vị</li>
-                                <li>Món ăn chính</a></li>
+                                <li>Món ăn chính</li>
                                 <li>Món tráng miệng</li>
                                 <li>Các loại thức uống </li>
                             </ul>

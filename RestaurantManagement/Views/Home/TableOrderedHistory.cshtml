@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Lịch sử đặt bàn";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    string[] TableHeader = new string[] {"Tên bàn", "Số người", "Bắt đầu", "Kết thúc" };
+    string[] TableHeader = new string[] { "STT", "Tên bàn", "Số người", "Bắt đầu", "Kết thúc" };
 }
 @model List<TableHistoryViewModels>
 
@@ -16,7 +16,7 @@
                     <div>
                         <h2>Lịch sử đặt bàn</h2>
                         <table class="table table-striped table-bordered">
-                            <thead>
+                            <thead class="thead-dark">
                                 <tr>
                                     @{
                                         foreach (var head in TableHeader)
@@ -32,19 +32,21 @@
                             </thead>
                             <tbody>
                                 @{
+                                    int i = 1;
                                     if (Model.Count > 0)
                                         foreach (var Data in Model)
                                         {
                                             <tr>
+                                                <td>@(i++)</td>
                                                 <td>@Data.TableName</td>
                                                 <td>@Data.PeopleCount</td>
-                                                <td>@Data.From</td>
-                                                <td>@Data.To</td>
+                                                <td>@Data.From.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                                                <td>@Data.To.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
                                             </tr>
                                         }
                                     else
                                     {
-                                        <tr><td colspan="4" class="text-center">Bạn chưa từng đặt bàn</td></tr>
+                                        <tr><td colspan="5" class="text-center">Bạn chưa từng đặt bàn</td></tr>
                                     }
                                 }
                             </tbody>
