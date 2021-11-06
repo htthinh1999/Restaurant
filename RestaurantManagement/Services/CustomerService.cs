@@ -70,6 +70,11 @@ namespace RestaurantManagement.Services
             {
                 return false;
             }
+            customer = await _userManager.FindByEmailAsync(registerViewModel.Email);
+            if (customer != null)
+            {
+                return false;
+            }
 
             var newCustomer = new Customer()
             {
@@ -79,6 +84,7 @@ namespace RestaurantManagement.Services
                 FullName = registerViewModel.FullName,
                 Gender = registerViewModel.Gender,
                 Birthday = registerViewModel.Birthday,
+                Email = registerViewModel.Email,
                 VIP = false,
             };
 
