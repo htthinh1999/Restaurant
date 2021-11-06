@@ -72,6 +72,26 @@ namespace RestaurantManagement.Controllers
             return RedirectToAction("Login");
         }
 
+        [HttpGet("/ResetPassword")]
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost("/ResetPassword")]
+        public async Task<IActionResult> ResetPassword(RegisterViewModel resetPassword)
+        {
+            var check = await _customerService.CheckPasswordAsync(resetPassword);
+            if (!check)
+            {
+                ModelState.Clear();
+                return View();
+            }
+
+            await _customerService.ResetPasswordAsync(resetPassword);
+            return RedirectToAction("Login", "Home");
+        }
+
         public async Task<IActionResult> TableOrderedHistory()
         {
             var TbHistory = await _customerService.GetTableHistoryAsync(User);
