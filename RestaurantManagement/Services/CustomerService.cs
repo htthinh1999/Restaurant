@@ -145,6 +145,60 @@ namespace RestaurantManagement.Services
                                        }).ToListAsync();
             return paymentDetail;
         }
+
+        public async Task<PaymentViewModel> GetBillToPayAsync(ClaimsPrincipal user)
+        {
+            var customer = await _userManager.GetUserAsync(user);
+            var foodPayment = await (from b in _context.Bill
+                                     where b.CustomerId == customer.Id && b.PaymentMethod == string.Empty
+                                     select b).FirstOrDefaultAsync();
+
+            if (foodPayment == null)
+            {
+                return null;
+            }
+
+            var billToPay = await (from bd in _context.BillDetail
+                                 join f in _context.Food on bd.FoodId equals f.Id
+                                 where bd.BillId == foodPayment.Id
+                                 select new BillViewModel
+                                 {
+                                    FoodName = f.Name,
+                                    UnitPrice = bd.UnitPrice,
+                                    Quantity = bd.Quantity,
+                                    Price = bd.Price
+                                 }).ToListAsync();
+
+            var payment = new PaymentViewModel
+                            {
+                                CreatedDate = foodPayment.CreatedDate,
+                                BillId = foodPayment.Id,
+                                BillToPay = billToPay,
+                                Total = foodPayment.Total
+                            };
+            return payment;
+        }
+
+        public async Task UpdatePaymentMethodAsync(ClaimsPrincipal user, PaymentViewModel payment)
+        {
+            var customer = await _userManager.GetUserAsync(user);
+            var billPayment = await (from b in _context.Bill
+                                     where b.CustomerId == customer.Id
+                                     select b).ToListAsync();
+
+            // Update VIP
+            if (billPayment.Count() > 10)
+                customer.VIP = true;
+
+            // Update payment method and total
+            var update = (from u in billPayment
+                          where u.PaymentMethod == string.Empty
+                          select u).FirstOrDefault();
+            update.PaymentMethod = payment.PaymentMethod;
+
+            _context.SaveChanges();
+        }
+
         public async Task<CartViewModel> ShowToCartAsync(ClaimsPrincipal user)
         {
             var customer = await _userManager.GetUserAsync(user);
