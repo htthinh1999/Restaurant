@@ -21,34 +21,25 @@ namespace RestaurantManagement.Services
             _userManager = userManager;
         }
 
-        public async Task<List<FoodViewModel>> GetAllFoodAsync(string[] listcategory)
+        public async Task<List<FoodViewModel>> GetAllFoodAsync(string[] listCategory)
         {
-            var foods = new List<FoodViewModel>();
-            if (listcategory.Count() == 0)
+            var query = from f in _context.Food
+                        select f;
+            if (listCategory.Count() > 0)
             {
-                foods = await (from f in _context.Food
-                               select new FoodViewModel
-                               {
-                                   Id = f.Id,
-                                   Category = f.Category,
-                                   Name = f.Name,
-                                   UnitPrice = f.UnitPrice,
-                                   ImageURL = f.ImageURL
-                               }).ToListAsync();
+                query = from q in query
+                        where listCategory.Contains(q.Category)
+                        select q;
             }
-            else 
-            {
-                foods = await (from f in _context.Food
-                               where listcategory.Contains(f.Category)
-                               select new FoodViewModel
+            var foods = await (from q in query
+                               select new FoodViewModel()
                                {
-                                   Id = f.Id,
-                                   Category = f.Category,
-                                   Name = f.Name,
-                                   UnitPrice = f.UnitPrice,
-                                   ImageURL = f.ImageURL
+                                   Id = q.Id,
+                                   Category = q.Category,
+                                   Name = q.Name,
+                                   UnitPrice = q.UnitPrice,
+                                   ImageURL = q.ImageURL,
                                }).ToListAsync();
-            }
             return foods;
         }
         public async Task<FoodViewModel> GetFoodByIdAsync(int id)
