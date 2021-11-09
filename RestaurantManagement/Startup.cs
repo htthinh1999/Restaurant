@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RestaurantManagement.Constants;
@@ -14,6 +15,7 @@ using RestaurantManagement.Data.Entities;
 using RestaurantManagement.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -58,6 +60,7 @@ namespace RestaurantManagement
             services.AddTransient<UserManager<Customer>, UserManager<Customer>>();
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IFoodService, FoodService>();
+            services.AddTransient<IResetPasswordService, ResetPasswordService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
