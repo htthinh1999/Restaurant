@@ -27,4 +27,12 @@
     <Folder Include="Constants\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\Template\mail-reset-password.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="wwwroot\Template\mail-reset-password.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
