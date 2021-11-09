@@ -19,6 +19,8 @@ namespace RestaurantManagement.Models
         [Required()]
         public string PhoneNumber { get; set; }
         [Required()]
+        public string Email { get; set; }
+        [Required()]
         public bool Gender { get; set; }
         [Required()]
         public DateTime Birthday { get; set; }
