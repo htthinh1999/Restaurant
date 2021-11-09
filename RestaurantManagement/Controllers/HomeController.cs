@@ -79,6 +79,10 @@ namespace RestaurantManagement.Controllers
         }
         public async Task<IActionResult> PaymentHistory()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             var pmHistory = await _customerService.GetPaymentHistoryAsync(User);
             return View(pmHistory);
         }
@@ -87,6 +91,23 @@ namespace RestaurantManagement.Controllers
             var paymentDetail = await _customerService.GetPaymentDetailAsync(id);
             return View(paymentDetail);
         }
+
+        [HttpGet("/Payment")]
+        public async Task<IActionResult> Payment()
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Home");
+            var payment = await _customerService.GetBillToPayAsync(User);
+            return View(payment);
+        }
+
+        [HttpPost("/Payment")]
+        public async Task<IActionResult> Payment(PaymentViewModel billPaymentVM)
+        {
+            await _customerService.UpdatePaymentMethodAsync(User, billPaymentVM);
+            return RedirectToAction("MenuFood", "Menu");
+        }
+
         [HttpGet]
         public async Task<IActionResult> ShowToCart()
         {
@@ -109,6 +130,7 @@ namespace RestaurantManagement.Controllers
             var cart = await _customerService.ShowToCartAsync(User,cartdetailvm);
             return View(cart);
         }
+        
         public IActionResult Privacy()
         {
             return View();
@@ -119,6 +141,11 @@ namespace RestaurantManagement.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
+        [Route("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _customerService.SignOutAsync();
+            return RedirectToAction("Index");
+        }
     }
 }
