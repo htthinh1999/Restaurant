@@ -172,37 +172,50 @@ namespace RestaurantManagement.Services
             var customer = await _userManager.GetUserAsync(user);
             if (customer == null)
                 return new CartViewModel();
-            if(cartdetailvm.Quantity==0)
+            if (cartdetailvm.Quantity <= 0)
             {
                 var CartDetail = (from f in _context.BillDetail
                                   where f.BillId == cartdetailvm.Id && f.FoodId == cartdetailvm.FoodId
                                   select f).FirstOrDefault();
-                var Cart = (from f in _context.Bill
-                            where f.Id == cartdetailvm.Id
-                            select f).FirstOrDefault();
-                Cart.Total -= cartdetailvm.UnitPrice;
-                _context.Remove(CartDetail);
+                if(CartDetail != null)
+                {
+                    var Cart = (from f in _context.Bill
+                                where f.Id == cartdetailvm.Id
+                                select f).FirstOrDefault();
+                    Cart.Total -= cartdetailvm.UnitPrice;
+                    _context.Remove(CartDetail);
+                }
             }
             else
             {
                 var CartDt= (from f in _context.BillDetail
                              where f.BillId == cartdetailvm.Id && f.FoodId == cartdetailvm.FoodId
                              select f).FirstOrDefault();
-                var Cart = (from f in _context.Bill
-                            where f.Id == cartdetailvm.Id
-                            select f).FirstOrDefault();
-                if (cartdetailvm.Type=="-")
+                if(CartDt != null)
                 {
-                    CartDt.Quantity--;
-                    CartDt.Price -= cartdetailvm.UnitPrice;
-                    Cart.Total -= cartdetailvm.UnitPrice;
+                    var Cart = (from f in _context.Bill
+                                where f.Id == cartdetailvm.Id
+                                select f).FirstOrDefault();
+                    if (cartdetailvm.Type == "-")
+                    {
+                        CartDt.Quantity--;
+                        if (CartDt.Quantity > 0)
+                        {
+                            CartDt.Price -= cartdetailvm.UnitPrice;
+                            Cart.Total -= cartdetailvm.UnitPrice;
+                        }
+                        else
+                        {
+                            _context.Remove(CartDt);
+                        }
+                    }
+                    if (cartdetailvm.Type == "+")
+                    {
+                        CartDt.Quantity++;
+                        CartDt.Price += cartdetailvm.UnitPrice;
+                        Cart.Total += cartdetailvm.UnitPrice;
+                    }
                 }
-                if(cartdetailvm.Type=="+")
-                {
-                    CartDt.Quantity++;
-                    CartDt.Price += cartdetailvm.UnitPrice;
-                    Cart.Total += cartdetailvm.UnitPrice;
-                }    
             }
             _context.SaveChanges();
             var cartafterupdate = await (from f in _context.Bill
