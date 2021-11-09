@@ -50,24 +50,39 @@
                                         <td class="text-center">@Data.Price</td>
                                     </tr>
                                 }
-                                <tr class="text-right">
-                                    <td colspan="5" style="font-size:20px">
+                                <tr class="text-left" style="font-size:15px">
+                                    <td colspan="4">
                                         <b>
-                                            Tổng tiền: @Model.First().Total VNĐ
+                                            Tổng tiền:
+                                        </b>
+                                    </td>
+                                    <td class="text-center">
+                                        <b>
+                                            @Model.First().Total VNĐ
                                         </b>
                                     </td>
                                 </tr>
-                                <tr class="text-right">
-                                    <td colspan="5" style="font-size:20px">
+                                <tr class="text-left" style="font-size:15px">
+                                    <td colspan="4">
                                         <b>
-                                            Thuế VAT: @(Model.First().Total / 10) VNĐ
+                                            Thuế VAT:
+                                        </b>
+                                    </td>
+                                    <td class="text-center">
+                                        <b>
+                                            @(Model.First().Total / 10) VNĐ
                                         </b>
                                     </td>
                                 </tr>
-                                <tr class="text-right">
-                                    <td colspan="5" style="font-size:20px">
+                                <tr class="text-left" style="font-size:15px">
+                                    <td colspan="4">
                                         <b>
-                                            Số tiền phải thanh toán: @(Model.First().Total / 10 * 11) VNĐ
+                                            Số tiền phải thanh toán:
+                                        </b>
+                                    </td>
+                                    <td class="text-center">
+                                        <b>
+                                            @(Model.First().Total / 10 * 11) VNĐ
                                         </b>
                                     </td>
                                 </tr>
