@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model FoodViewModel
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- Product main img -->
+            <div class="col-md-6 ">
+                <div class="product-preview">
+                    <img src="@Model.ImageURL" alt="">
+                </div>
+            </div>
+            <!-- /Product main img -->
+            <!-- Product details -->
+            <form asp-action="InsertFoodToCart" asp-controller="Menu" method="post">
+                <div class="col-md-6 text-center">
+                    <div class="product-details">
+                        <h2 class="product-name">@Model.Name</h2>
+                        <div>
+                            <div class="product-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <p class="review-link">10 Review(s)</p>
+                        </div>
+                        <div>
+                            <h3 class="product-price">Giá: @Model.UnitPrice VND</h3>
+                            <br>
+                        </div>
+                        <div>
+                            <h4>@Model.Description</h4>
+                        </div>
+                        <div class="product-options">
+                            <label>
+                                Số lượng
+                                <input type="number" value=1 class="input-select" name="food.InsertFoodViewModel.Quantity" />
+                            </label>
+                        </div>
+                        <input type="hidden" name="food.InsertFoodViewModel.FoodId" value="@Model.Id" />
+                        <input type="hidden" name="food.InsertFoodViewModel.UnitPrice" value="@Model.UnitPrice" />
+                        <div class="add-to-cart">
+                            <button class="add-to-cart-btn" type="submit"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- /Product details -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->

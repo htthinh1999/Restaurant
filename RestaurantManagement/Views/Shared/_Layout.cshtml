@@ -1,0 +1,192 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using RestaurantManagement.Data.Entities
+@inject SignInManager<Customer> SignInManager
+@inject UserManager<Customer> UserManager
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] | RestaurantManagement</title>
+    <link rel="stylesheet" type="text/css" href="/css/site.css" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <!-- TOP HEADER -->
+        <div id="top-header">
+            <div class="container">
+                <ul class="header-links pull-left">
+                    <li><a href="#"><i class="fa fa-phone"></i> 0394003431</a></li>
+                    <li><a href="#"><i class="far fa-envelope"></i> Hien@hcmut.edu.vn</a></li>
+                    <li><a href="#"><i class="fa fa-map-marker"></i> Ho Chi Minh</a></li>
+                </ul>
+                <ul class="header-links pull-right">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li style="color:white;">Chào @((await UserManager.GetUserAsync(User)).FullName)　|</li>
+                        <li><a href="@Url.Action("Logout","Home")"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("Login","Home")"><i class="fa fa-user"></i>Login</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <!-- /TOP HEADER -->
+        <!-- MAIN HEADER -->
+        <div id="header">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <!-- LOGO -->
+                    <div class="col-md-3">
+                        <div class="header-logo">
+                            <a href="#" class="logo">
+                                <img src="/images/logo.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /LOGO -->
+                    <!-- SEARCH BAR -->
+                    <div class="col-md-6">
+                        <div class="header-search">
+                            <form>
+                                <input class="input-select" placeholder="Search here">
+                                <button class="search-btn">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /SEARCH BAR -->
+                    <!-- ACCOUNT -->
+                    <div class="col-md-3 clearfix">
+                        <div class="header-ctn">
+                            <!-- Wishlist -->
+                            <div>
+                                <a href="#">
+                                    <i class="far fa-heart"></i>
+                                    <span>Your Wishlist</span>
+                                    <div class="qty">2</div>
+                                </a>
+                            </div>
+                            <!-- /Wishlist -->
+                            <!-- Cart -->
+                            <div>
+                                <a href="@Url.Action("ShowToCart","Home")">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <span>Your Cart</span>
+                                    <div class="qty">3</div>
+                                </a>
+                            </div>
+                            <!-- /Cart -->
+                        </div>
+                    </div>
+                    <!-- /ACCOUNT -->
+                </div>
+                <!-- row -->
+            </div>
+            <!-- container -->
+        </div>
+        <!-- /MAIN HEADER -->
+    </header>
+    <!-- /HEADER -->
+    <!-- NAVIGATION -->
+    <nav id="navigation">
+        <!-- container -->
+        <div class="container">
+            <!-- responsive-nav -->
+            <div id="responsive-nav">
+                <!-- NAV -->
+                <ul class="main-nav nav navbar-nav">
+                    <li><a href=@Url.Action("Index", "Home")>Home</a></li>
+                    <li><a href="@Url.Action("MenuFood", "Menu")">Menu</a></li>
+                    <li><a href="@Url.Action("Payment", "Home")">Thanh toán</a></li>
+                    @{
+                        if (!SignInManager.IsSignedIn(User) || (await UserManager.GetUserAsync(User)).VIP)
+                        {
+                            <li><a href="#">Đặt bàn</a></li>
+                            <li><a href="@Url.Action("TableOrderedHistory", "Home")">Lịch sử đặt bàn</a></li>
+                        }
+                    }
+                    <li><a href="@Url.Action("PaymentHistory", "Home")">Lịch sử thanh toán</a></li>
+                </ul>
+                <!-- /NAV -->
+            </div>
+            <!-- /responsive-nav -->
+        </div>
+        <!-- /container -->
+    </nav>
+    <!-- /NAVIGATION -->
+    <!--BODY-->
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <!--/BODY-->
+    <!-- FOOTER -->
+    <footer id="footer">
+        <!-- top footer -->
+        <div class="section">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-5 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">Mọi thắc mắc vui lòng liên hệ</h3>
+                            <ul class="footer-links">
+                                <li><i class="fa fa-map-marker"></i>Hồ Chí Minh</li>
+                                <li><i class="fa fa-phone"></i>0394003434</li>
+                                <li><i class="far fa-envelope"></i>Hien@hcmut.edu.vn</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">Các kiểu thức ăn</h3>
+                            <ul class="footer-links">
+                                <li>Món khai vị</li>
+                                <li>Món ăn chính</li>
+                                <li>Món tráng miệng</li>
+                                <li>Các loại thức uống </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="clearfix visible-xs"></div>
+                    <div class="col-md-4 col-xs-6">
+                        <div class="footer">
+                            <h3 class="footer-title">Các loại dịch vụ</h3>
+                            <ul class="footer-links">
+                                <li>Thanh toán online, tiết kiệm thời gian</li>
+                                <li>Đặt món online, thỏa sức lựa chọn</li>
+                                <li>Tri ân khách hàng thành viên</li>
+                                <li>Đặt bàn trước mà không cần tới nơi</li>
+                                <li>Hỗ trợ giải đáp mọi thắc mắc</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /top footer -->
+    </footer>
+    <!-- /FOOTER -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
