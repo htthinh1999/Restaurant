@@ -24,7 +24,6 @@
                                     <th class="text-center">
                                         @head
                                     </th>
-
                                 }
                             }
                         </tr>
@@ -40,7 +39,7 @@
                                         <td class="text-center">
                                             <a href="@Url.Action("PaymentDetailHistory","Home",new { id=Data.Id })">Xem chi tiết: </a>
                                         </td>
-                                        <td class="text-center">@Data.Total</td>
+                                        <td class="text-center">@(Data.Total * 11 /10)</td>
                                         <td class="text-center">@Data.PaymentMethod</td>
                                         <td class="text-center">@Data.CreatedDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
                                     </tr>
