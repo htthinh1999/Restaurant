@@ -43,7 +43,7 @@ namespace RestaurantManagement.Services
             // where c.UserName == username
             // select c.Email).FirstOrDefault();
 
-            if (string.IsNullOrEmpty(customer.Email))
+            if (customer == null || string.IsNullOrEmpty(customer.Email))
             {
                 return false;
             }
