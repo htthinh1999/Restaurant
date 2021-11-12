@@ -29,11 +29,11 @@
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <li style="color:white;">Chào @((await UserManager.GetUserAsync(User)).FullName)　|</li>
-                        <li><a href="@Url.Action("Logout","Home")"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+                        <li><a href="@Url.Action("Logout","Home")"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a></li>
                     }
                     else
                     {
-                        <li><a href="@Url.Action("Login","Home")"><i class="fa fa-user"></i>Login</a></li>
+                        <li><a href="@Url.Action("Login","Home")"><i class="fa fa-user"></i>Đăng nhập</a></li>
                     }
                 </ul>
             </div>
@@ -71,7 +71,7 @@
                             <div>
                                 <a href="@Url.Action("ShowToCart","Home")">
                                     <i class="fa fa-shopping-cart"></i>
-                                    <span>Giỏ hàng của bạn</span>
+                                    <span>Giỏ hàng</span>
                                     <div class="qty">3</div>
                                 </a>
                             </div>
