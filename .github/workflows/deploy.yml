@@ -14,10 +14,9 @@ jobs:
         name: Deploy to Heroku
         runs-on: ubuntu-latest
         steps:
-            # Clone the repository
-            - name: Checkout
+            - name: Clone the repository
               uses: actions/checkout@v2
-
+              
             # Build Docker image
             - name: Docker build
               run: |
