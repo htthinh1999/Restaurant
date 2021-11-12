@@ -1,17 +1,9 @@
-name: Deploy Docker Image to Heroku App
-uses: jctaveras/heroku-deploy@v2.1.3
-
-
 name: Deploy to Heroku
 
 on:
     push:
         branches:
             - main
-
-env:
-    HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-    APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
 
 jobs:
     build:
@@ -22,12 +14,10 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v2
 
-            # Build Docker image
-            - name: Docker build
-              run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-
-            # Push the Docker image to Heroku Container Registry
-            - name: Publish
-              run: |
-                  heroku container:push web -a $APP_NAME
-                  heroku container:release web -a $APP_NAME
+            # Build and Push the Docker image to Heroku Container Registry
+            - uses: akhileshns/heroku-deploy@v3.12.12
+              with:
+                  heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+                  heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+                  heroku_email: ${{ secrets.HEROKU_EMAIL }}
+                  dockerfile_path: "RestaurantManagement"
