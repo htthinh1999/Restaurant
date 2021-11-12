@@ -14,17 +14,14 @@ jobs:
         name: Deploy to Heroku
         runs-on: ubuntu-latest
         steps:
-            # Clone the repository
-            - name: Checkout
+            - name: Clone repository
               uses: actions/checkout@v2
 
-            # Build Docker image
-            - name: Docker build
+            - name: Login to Heroku from Docker
               run: |
                   docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
 
-            # Push the Docker image to Heroku Container Registry
-            - name: Publish
+            - name: Build & Push the Docker image to Heroku Container Registry
               run: |
                   heroku container:push web -a $APP_NAME
                   heroku container:release web -a $APP_NAME
