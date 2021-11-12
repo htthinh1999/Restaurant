@@ -1,3 +1,7 @@
+name: Deploy Docker Image to Heroku App
+uses: jctaveras/heroku-deploy@v2.1.3
+
+
 name: Deploy to Heroku
 
 on:
@@ -7,7 +11,7 @@ on:
 
 env:
     HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-    APP_NAME: ${{ 'awesomee-restaurant' }}
+    APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
 
 jobs:
     build:
