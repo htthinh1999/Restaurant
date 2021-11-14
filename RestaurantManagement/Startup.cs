@@ -44,7 +44,6 @@ namespace RestaurantManagement
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
-
             services.AddDbContext<RestaurantDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.OnlineConnection))
                             .UseLoggerFactory(SQLServerLoggerFactory)
