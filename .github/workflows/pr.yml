@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-
+    name: Check build pass before merging
     runs-on: ubuntu-latest
 
     steps:
