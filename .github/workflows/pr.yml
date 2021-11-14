@@ -2,7 +2,8 @@ name: Check build pass before merging
 
 on:
   pull_request:
-    branches: [ main ]
+    branches:
+      - "**"
 
 jobs:
   build:
