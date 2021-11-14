@@ -43,8 +43,7 @@ namespace RestaurantManagement
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddRazorPages()
-
+            services.AddRazorPages();
             services.AddDbContext<RestaurantDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.OnlineConnection))
                             .UseLoggerFactory(SQLServerLoggerFactory)
