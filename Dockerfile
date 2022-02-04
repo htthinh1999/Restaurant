@@ -17,5 +17,5 @@ RUN dotnet publish "RestaurantManagement.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-#ENTRYPOINT ["dotnet", "RestaurantManagement.dll"]
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet RestaurantManagement.dll
+ENTRYPOINT ["dotnet", "RestaurantManagement.dll"]
+#CMD ASPNETCORE_URLS=http://*:$PORT dotnet RestaurantManagement.dll
